@@ -7,11 +7,16 @@
     type VexRPCContext,
   } from "$lib/types.js";
   import { VexRpcShape } from "$lib/index.js";
+  import Caveman from "./Caveman.svelte";
 
   export let socket: URL;
 
+  export let mirror: string;
+
   export let width: number;
   export let height: number;
+
+  let packages: Writable<string[]> = writable([]);
 
   let ctx: Writable<VexRPCContext> = writable({
     canvas_height: width,
@@ -20,6 +25,10 @@
     socket,
   });
   setContext("VexRPCContext", ctx);
+
+  export const importPackage = (pkg: string) => {
+    $packages = [...$packages, pkg];
+  };
 
   export const addShape = (shape: VexcriptShape) => {
     $ctx.shapes = [...$ctx.shapes, shape];
@@ -57,7 +66,9 @@
 <slot />
 
 <div style="width: {width}px; height: {height}px;"></div>
-
-{#each $ctx.shapes as [shape_type, shape_props]}
-  <VexRpcShape {shape_type} {shape_props} />
-{/each}
+<p>{$packages}</p>
+<Caveman packages={$packages} {mirror}>
+  {#each $ctx.shapes as [shape_type, shape_props]}
+    <VexRpcShape {shape_type} {shape_props} />
+  {/each}
+</Caveman>

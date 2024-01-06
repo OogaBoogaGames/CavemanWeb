@@ -10,7 +10,15 @@ export type CavemanContext = {
   packages: CavemanPackage[];
 };
 
-export type VexcriptShape = [VexcriptShapeType, RectangleProps | GroupProps];
+export type CavemanImageProps = {
+  packageid: string;
+  assetid: string;
+};
+
+export type VexcriptShape = [
+  VexcriptShapeType,
+  RectangleProps | GroupProps | ImageProps
+];
 
 export type VexRPCContext = {
   canvas_height: number;
@@ -22,6 +30,7 @@ export type VexRPCContext = {
 export enum VexcriptShapeType {
   Rectangle,
   Group,
+  Image,
   // More to come, this is a demo.
 }
 
@@ -30,6 +39,14 @@ export type RectangleProps = {
   y: number;
   width: number;
   height: number;
+};
+
+export type ImageProps = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  src: URL | CavemanImageProps;
 };
 
 export type GroupProps = {
