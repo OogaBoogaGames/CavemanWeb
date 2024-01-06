@@ -29,6 +29,7 @@
   }
 
   onMount(async () => {
+    // @ts-ignore - For whatever reason, the typescript compiler doesn't believe that init() is callable
     await init();
     $cavemanContextStore = await createCtx(packages);
   });

@@ -11,14 +11,14 @@
   export let width: string | null = null;
   export let height: string | null = null;
 
-  let elem: HTMLImageElement;
+  let srcUrl: string;
 
   let ctx: Writable<CavemanContext> = getContext("CavemanContext");
 
   function updateSrc(ctx: CavemanContext) {
     ctx.packages.forEach(async (pkg, index, arr) => {
       if ((pkg.id = packageid)) {
-        elem.src = URL.createObjectURL(await pkg.bundle.get_asset(assetid));
+        srcUrl = URL.createObjectURL(await pkg.bundle.get_asset(assetid));
       }
     });
   }
@@ -34,8 +34,8 @@
   class={$$props.class}
   id={$$props.id}
   style={$$props.style}
+  src={srcUrl}
   {width}
   {height}
-  bind:this={elem}
   alt={assetid}
 />
